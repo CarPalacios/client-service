@@ -88,16 +88,16 @@ public class ClientController {
 				
 	}
 	
-	@DeleteMapping("/{id}")
-	public Mono<ResponseEntity<Void>> deleteById(@PathVariable("id") String id) {
-		
-		return service.findById(id)
-				.flatMap(c -> {
-					return service.delete(c.getId())
-							.thenReturn(new ResponseEntity<Void>(HttpStatus.NO_CONTENT));
-				})
-				.defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
-	
-	}
+//	@DeleteMapping("/{id}")
+//	public Mono<ResponseEntity<Void>> deleteById(@PathVariable("id") String id) {
+//		
+//		return service.findById(id)
+//				.flatMap(c -> {
+//					return service.delete(c.getId())
+//							.thenReturn(new ResponseEntity<Void>(HttpStatus.NO_CONTENT));
+//				})
+//				.defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
+//	
+//	}
 	
 }
