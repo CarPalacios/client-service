@@ -3,8 +3,6 @@ package com.nttdata.controller;
 import com.nttdata.model.Client;
 import com.nttdata.service.ClientService;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-
 import java.net.URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,7 +42,7 @@ public class ClientController {
   
   /** Muestra los registros de la tabla a traves de un id.
    * * @return registro de la tabla seleccionada por id. */
-  @CircuitBreaker(name="clientCB", fallbackMethod = "fallBackGetClient")
+  
   @GetMapping("/{id}")
   public Mono<ResponseEntity<Client>> findById(@PathVariable("id") String id) {
   
@@ -52,9 +50,7 @@ public class ClientController {
         .map(c -> ResponseEntity
             .ok()
             .contentType(MediaType.APPLICATION_JSON)
-            .body(c))
-        .defaultIfEmpty(new ResponseEntity<Client>(HttpStatus.NOT_FOUND));
-    
+            .body(c));    
   }
   
   /** Crea los registros de la tabla.* @return crea registros de la tabla. */
@@ -108,8 +104,6 @@ public class ClientController {
   
   }
   
-  private Mono<ResponseEntity<Client>> fallBackGetClient(@PathVariable("id") String id) {
-    return Mono.just(new ResponseEntity("Error", HttpStatus.OK));
-  }
+  
   
 }
