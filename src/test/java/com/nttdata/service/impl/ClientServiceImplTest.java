@@ -1,7 +1,5 @@
 package com.nttdata.service.impl;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +24,12 @@ class ClientServiceImplTest {
   void testFindAll() {
     client.get().uri("/client").accept(MediaType.APPLICATION_JSON)
     .exchange().expectStatus().isOk().expectHeader().contentType(MediaType.APPLICATION_JSON)
-    .expectBodyList(Client.class).hasSize(5);
+    .expectBodyList(Client.class).hasSize(6);
   }
 
   @Test
   void testFindById() {
-    
-//    Client clients = new Client();    
+      
     client.get().uri("/client/6196f0aab3c9d3812f24bd70")
     .accept(MediaType.APPLICATION_JSON).exchange()
     .expectStatus().isOk()
@@ -45,7 +42,7 @@ class ClientServiceImplTest {
   @Test
   void testCreate() {
     
-    Client clients = new Client("1","Juan","PERSONAL","72452304");
+    Client clients = new Client("2","Juan","PERSONAL","72452304");
     
     client.post().uri("/client")
     .contentType(MediaType.APPLICATION_JSON)
@@ -63,12 +60,35 @@ class ClientServiceImplTest {
 
   @Test
   void testUpdate() {
-    fail("Not yet implemented");
+    
+    Client clientedit = new Client();
+    clientedit.setName("Alejandro");
+    clientedit.setType("PERSONAL");
+    clientedit.setIdentityNumber("72451234");
+    
+    client.put().uri("/client/6196f14642e4ca32a9f5b199")
+    .contentType(MediaType.APPLICATION_JSON)
+    .accept(MediaType.APPLICATION_JSON)
+    .body(Mono.just(clientedit), Client.class)
+    .exchange()
+    .expectStatus().isOk()
+    .expectHeader().contentType(MediaType.APPLICATION_JSON)
+    .expectBody()
+    .jsonPath("$.id").isNotEmpty()
+    .jsonPath("$.name").isEqualTo("Alejandro")
+    .jsonPath("$.type").isEqualTo("PERSONAL")
+    .jsonPath("$.identityNumber").isEqualTo("72451234");
   }
 
   @Test
   void testDelete() {
-    fail("Not yet implemented");
+        
+    client.delete().uri("/client/1")
+    .exchange()
+    .expectStatus().isNoContent()
+    .expectBody()
+    .isEmpty();
+        
   }
 
 }
