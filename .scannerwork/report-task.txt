@@ -2,5 +2,5 @@ projectKey=Microclient
 serverUrl=http://localhost:9000
 serverVersion=9.2.0.49834
 dashboardUrl=http://localhost:9000/dashboard?id=Microclient
-ceTaskId=AX1ZbYcM9ZtqVkLyaGvq
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AX1ZbYcM9ZtqVkLyaGvq
+ceTaskId=AX14VxFKAiCNMdhDQTjp
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AX14VxFKAiCNMdhDQTjp
