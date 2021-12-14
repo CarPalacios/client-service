@@ -1,5 +1,6 @@
 package com.nttdata.controller;
 
+import com.nttdata.kafka.producer.KafkaProducer;
 import com.nttdata.model.Client;
 import com.nttdata.service.ClientService;
 
@@ -27,6 +28,9 @@ public class ClientController {
 
   @Autowired
   private ClientService service;
+  
+  @Autowired
+  private KafkaProducer producer;
   
   /** Muestra los registros de la tabla * @return registro de la tabla seleccionada. */
   @GetMapping
@@ -59,10 +63,16 @@ public class ClientController {
       create(@RequestBody Client client, final ServerHttpRequest request) {
     
     return service.create(client)
-        .map(c -> ResponseEntity
+        .map(c -> {
+          
+          producer.sendMessage(c);
+          
+          return ResponseEntity        
             .created(URI.create(request.getURI().toString().concat("/").concat(c.getId())))
             .contentType(MediaType.APPLICATION_JSON)
-            .body(c));
+            .body(c);
+            
+        });
     
   }
   
