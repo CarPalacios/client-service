@@ -24,7 +24,7 @@ public class Client {
   private String id;
   
   private String name;
-  
+
   private String type;
   
   @Field(name = "identity_number")
